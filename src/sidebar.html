@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="jquery.js"></script>
+    <script src="jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <title></title>
+
+    <style>
+        .ui-tooltip {
+            padding: 8px;
+            position: absolute;
+            z-index: 9999;
+            max-width: 300px;
+            white-space: pre-line;
+        }
+        .ui-corner-all {
+            border-radius: 3px;
+        }
+        .ui-widget-shadow {
+            -webkit-box-shadow: 0px 0px 5px #666666;
+            box-shadow: 0px 0px 5px #666666;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        th, td {
+            border: 1px solid #666666;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .ui-widget.ui-widget-content {
+            border: 1px solid #c5c5c5;
+        }
+        .ui-widget-content {
+            border: 1px solid #dddddd;
+            background: #ffffff;
+            color: #333333;
+        }
+        .ui-helper-hidden-accessible{
+            display: none;
+        }
+
+        .TL03000152_Container {
+            font-size: 18px;
+            text-align: center;
+        }
+        .TL03000152_Semaphore {
+            border-radius: 20px;
+            border: 10px;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            position: relative;
+            top: 0.1em;
+            margin: 0 0.1em;
+        }
+        .TL03000152_Red {
+            background-color: red;
+        }
+        .TL03000152_Green {
+            background-color: green;
+        }
+        #TL03000152_Title {
+            padding-right: 30px;
+        }
+        .TL03000152_Title_Root{
+            text-align: center;
+        }
+        .TL03000152_Item{
+            margin: 20px;
+        }
+        .TL03000152_Link{
+            text-decoration: underline;
+            color: gray;
+            cursor: pointer;
+        }
+        .TL03000152_Question_Mark{
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            border-radius: 30px;
+            border: 3px solid lightgray;
+            padding-left: 8px;
+            color: lightgray;
+            font-weight: bold;
+        }
+        .TL03000152_QM_White{
+            border: 3px solid white;
+            color: white;
+        }
+        .TL03000152_Button {
+            padding: 15px;
+            background-color: lightgray;
+            border-radius: 3px;
+            font-weight: bold;
+            display: block;
+        }
+        .TL03000152_Dropdown_Item {
+            padding: 7px;
+            border: 3px solid lightgray;
+            border-top: none;
+            border-radius: 3px;
+            font-weight: bold;
+            display: block;
+        }
+        .TL03000152_Contact_Info {
+            list-style-type: square;
+            padding-left: 18px;
+            margin-top: 5px;
+        }
+        .TL03000152_Cookie {
+            cursor: url("icons/crosscursor.png") 12 12, auto;
+        }
+        .TL03000152_Cookie:hover {
+            color: red;
+        }
+        #TL03000152_Main_Content{
+            display: none;
+        }
+
+        #chatWidget {
+            /* position: absolute;
+            right: 0;
+            top: 0; */
+            width: calc(100vw - 130px);
+            max-width: 400px;
+            height: 220px;
+            /* border: 1px solid black; */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column-reverse;
+            padding: 10px 117px 130px 10px;
+            font-size: 14px;
+            user-select: none;
+        }
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 7px 7px 1px 7px;
+            box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        #chatWidgetBlurredTop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 137px;
+            background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+        }
+        #chatWidgetWileECoyote {
+            position: absolute;
+            top: 190px;
+            right: 0;
+            width: 120px;
+            height: 180px;
+            background-image: url("icons/coyote-waving.jpg");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: -1;
+        }
+        #resultDiv {
+            /* position: absolute;
+            bottom: 0; */
+            width: 250px;
+            font-size: 14px;
+            overflow-wrap: break-word;
+        }
+<!-- 
+        #is_advertisement {
+            width: 250px;
+            font-size: 15px;
+        } -->
+
+        .bubble_pre {
+            margin-top: 20px;
+            width: 250px;
+            font-size: 15px;
+            overflow-wrap: break-word;
+        }
+
+        .advertisement_status {
+            background-color: #fafafa;
+            padding: 10px;
+            border-radius: 20px;
+            box-shadow: -2px -2px 9px -3px rgba(0, 0, 0, 0.7);
+            margin: 0 auto 10px auto;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        TL03000152_sem1                    [class green/red]
+        TL03000152_processor_main          [name of main processor]
+        TL03000152_processors_other        [<li> of other processors]
+        TL03000152_cookie_list             [<li> of cookies]
+        TL03000152_sem2                    [class green/red], equal to sem1?
+        TL03000152_propaganda              [text "není"/"je"]
+    -->
+
+    <div class="TL03000152_Container" id="TL03000152_Main">
+        <div id="cookie_whole_page">
+        </div>
+        <div id="chatWidget">
+            <div id="chatWidgetBlurredTop"></div>
+            <div id="chatWidgetWileECoyote"></div>
+        </div>
+        <div id="resultDiv"></div>
+        <div id="" class="bubble_pre advertisement_status">Můj <i>kojotí skener</i> na reklamy mi říká, že...</div>
+        <div id="is_advertisement" class="advertisement_status">...musíte nějakou stránku nejprve otevřít.</div>
+
+        <div id="" class="bubble_pre advertisement_status">Můj <i>kojotí skener</i> na únik osobních údajů mi říká, že...</div>
+        <div id="show_ents" class="advertisement_status">...musíte nějakou stránku nejprve otevřít.</div>
+        
+        <!-- <h1 class="TL03000152_Title_Root"><span style="display: inline-block"><span id="TL03000152_Title">PLUG-IN</span>
+            <span class="TL03000152_Semaphore TL03000152_Red" id="TL03000152_sem1"></span></span></h1>
+
+        <div id="TL03000152_Main_Content">
+            <p class="TL03000152_Item">
+                <span id="TL03000152_processor_main"></span>
+            </p>
+            <div id="TL03000152_Some_Stuff">
+                <ul class="TL03000152_Item">
+                    <li><span class="TL03000152_Link" id="TL03000152_Why">Proč</span> ho/ji vaše údaje zajímají? <span data-href="stranka/proc_zajimaji" class="TL03000152_Question_Mark" id="TL03000152_qm_1">?</span></li>
+                    <li><span class="TL03000152_Link" id="TL03000152_Which">Jaké</span> údaje o vás zpracovává? <span data-href="stranka/jake_udaje" class="TL03000152_Question_Mark" id="TL03000152_qm_2">?</span></li>
+                    <li>Na základě <span class="TL03000152_Link" id="TL03000152_What">čeho</span> k nim má přístup? <span data-href="stranka/na_zaklade_ceho" class="TL03000152_Question_Mark" id="TL03000152_qm_3">?</span></li>
+                </ul>
+                <p class="TL03000152_Item">
+                    Přístup k vaším údajům má ještě: <span data-href="stranka/vedlejsi_pristup" class="TL03000152_Question_Mark"  id="TL03000152_qm_4">?</span>
+                </p>
+                <ul class="TL03000152_Item" id="TL03000152_processors_other"></ul>
+            </div>
+
+            <p class="TL03000152_Item">
+                Tyto cookies <span data-href="stranka/co_jsou_cookies" class="TL03000152_Question_Mark" id="TL03000152_qm_5">?</span> zpracovávají vaše osobní údaje:
+            </p>
+            <ul class="TL03000152_Item" id="TL03000152_cookie_list"></ul>
+            <p>
+                Po kliknutí na cookies ji můžete <span class="TL03000152_Link TL03000152_Webpage_Link" data-href="https://aimlaw.ilaw.cas.cz/">zakázat</span>. Pokud víte, co děláte.
+            </p>
+            
+            <p class="TL03000152_Item">
+                Chcete stránce zakázat oznámení?<br>
+                <span class="TL03000152_Link TL03000152_Webpage_Link" data-href="https://aimlaw.ilaw.cas.cz/">Zde</span> je odkaz na instruktážní video.
+            </p>
+            <div class="TL03000152_Item">
+                <span class="TL03000152_Button" id="TL03000152_rights_dropdown_btn">Jaká jsou vaše práva? <span data-href="stranka/vase_prava" class="TL03000152_Question_Mark TL03000152_QM_White" id="TL03000152_qm_6">?</span></span>
+                <div id="TL03000152_rights_dropdown_menu">
+                    <span class="TL03000152_Dropdown_Item TL03000152_Link TL03000152_Webpage_Link" data-href="https://aimlaw.ilaw.cas.cz/">Podrobný přehled</span>
+                    <span class="TL03000152_Dropdown_Item TL03000152_Link TL03000152_Webpage_Link" data-href="https://aimlaw.ilaw.cas.cz/">Chci odvolat souhlas se zpracováním</span>
+                    <span class="TL03000152_Dropdown_Item TL03000152_Link TL03000152_Webpage_Link" data-href="https://aimlaw.ilaw.cas.cz/">Chci vymazat svoje osobní údaje</span>
+                    <span class="TL03000152_Dropdown_Item TL03000152_Link TL03000152_Webpage_Link" data-href="https://aimlaw.ilaw.cas.cz/">Chci uvědomit Úřad pro ochranu osobních údajů</span>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <!--<div class="TL03000152_Container" id="TL03000152_Settings">
+        <h1 class="TL03000152_Title_Root">Nastavení</h1>
+        <p class="TL03000152_Item">
+            <span class="TL03000152_Link TL03000152_Settings_Link">Vrátit</span> se zpět.
+        </p>
+    </div> -->
+</body>
+<script src="main.js"></script>
+</html>

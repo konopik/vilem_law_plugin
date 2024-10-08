@@ -1,0 +1,39 @@
+{
+    "manifest_version": 3,
+    "name": "vilda to the rescue",
+    "version": "0.0",
+    "description": "Kojot Vilda je tady pro tebe!",
+    "icons": {
+        "48": "icons/main-48.png"
+    },
+    "side_panel": {
+        "default_path": "sidebar.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.cz/*podminky*"
+            ],
+            "js": [
+                "highlight.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.cz/*"
+            ],
+            "js": [
+                "extract_info.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "activeTab",
+        "sidePanel",
+        "tabs",
+        "storage"
+    ]
+}
