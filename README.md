@@ -1,7 +1,7 @@
 # Jak načíst Chrome rozšíření z lokálního repozitáře
 
 ### 1. Klonování nebo stažení repozitáře
-- Nejprve naklonujte repozitář z GitHubu nebo jiného zdroje pomocí příkazu `git clone`, nebo stáhněte přímo soubor `.zip`:
+- Nejprve naklonujte repozitář z GitHubu nebo jiného zdroje pomocí příkazu `git clone`, nebo stáhněte přímo soubor `.zip` kliknutím na tlačítko "Code":
   - Pro klonování spusťte:
     ```bash
     git clone https://github.com/konopik/vilem_law_plugin.git
