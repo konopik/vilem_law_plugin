@@ -29,6 +29,11 @@
 ### 7. Aktivace rozšíření
 - Klikněte na ikonu rozšíření vedle adresního řádku a na rozšíření s název "vilda to the rescue".
 
+### Ukázky funkce
+
+![Example 1](img/example1.png)
+![Example 2](img/example2.png)
+
 ### Ověření rozšíření
 Otestujte rozšíření na různých webech, jako například:
 - https://www.okoun.cz/
