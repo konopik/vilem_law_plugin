@@ -220,8 +220,8 @@ function update_cookie(data) {
   // generate table from entities
   var table = $("<table></table>");
   var tr = $("<tr></tr>");
-  tr.append("<th>Entity</th>");
-  tr.append("<th>Category</th>");
+  tr.append("<th>Údaj</th>");
+  tr.append("<th>Hodnota</th>");
   table.append(tr);
   for (var i = 0; i < entities.length; i++) {
     var tr = $("<tr></tr>");
